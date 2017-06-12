@@ -27,7 +27,7 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
     $month = jdate($month_for_function);
     $year = jdate($year_for_function);
 
-    $query = "SELECT * FROM `all_users` WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year' AND `price` != 0";
+    $query = "SELECT * FROM `all_users` WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year'";
     $result = mysqli_query($conn, $query);
 
     return $result;

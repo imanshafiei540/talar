@@ -69,7 +69,7 @@ if (isset($_GET['btn-search'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
+    <title>جست و جو</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -212,6 +212,7 @@ if (isset($_GET['btn-search'])) {
             <th>کد ملی</th>
             <th>نام خانوادگی</th>
             <th>نام</th>
+            <th>تاریخ مراجعه</th>
         </tr>
         </thead>';
             }
@@ -233,7 +234,7 @@ if (isset($_GET['btn-search'])) {
             $des_num = mysqli_fetch_assoc($r);
             ?>
             <tr>
-                <td><?php echo ($row['id'] == 1 ? '<i class="fa fa-check-circle" style="color:green"></i>' : '<i class="fa fa-remove" style="color:red"></i>');?></td>
+                <td><?php echo ($row['pay'] == 1 ? '<i class="glyphicon glyphicon-check" style="color:green"></i>' : '<i class="glyphicon glyphicon-remove" style="color:red"></i>');?></td>
                 <td><?php echo $row['end_time']; ?></td>
                 <td><?php echo $row['start_time']; ?></td>
                 <td><?php echo $des_num['id']; ?></td>
@@ -242,6 +243,7 @@ if (isset($_GET['btn-search'])) {
                 <td><?php echo $row['melli']; ?></td>
                 <td><?php echo $row['l_name']; ?></td>
                 <td><?php echo $row['f_name']; ?></td>
+                <td><?php echo $row['year']." / ".$row['month']." / ".$row['day']; ?></td>
             </tr>
             <?php
         }
