@@ -14,9 +14,93 @@ if (!$conn) {
 
 date_default_timezone_set("Asia/Tehran");
 
-$query = "SELECT * FROM `ready_users` WHERE 1";
-$result = mysqli_query($conn, $query);
+if (isset($_POST['btn-end'])) {
+    $query_for_user_exist = "SELECT `isReady` FROM `ready_users` WHERE `ip` = '$pc_name'";
+    $result_for_user_exist = mysqli_query($conn, $query_for_user_exist);
+    $array_for_user_exist = mysqli_fetch_array($result_for_user_exist);
+    $is_user_exist = $array_for_user_exist['isReady'];
+    if ($is_user_exist == 1){
+        if (isset($_POST['end_work'])){
+            $pc_id = $_POST['pc_id'];
 
+
+            $end_time = date("h:i:sa");
+            $isReady = 0;
+            $query8 = "UPDATE `ready_users` SET `end_time`= '$end_time', `isReady`= '$isReady' WHERE `id` = $pc_id";
+            $result8 = mysqli_query($conn, $query8);
+
+
+            $query = "SELECT * FROM `ready_users` WHERE `id`= $pc_id ";
+            $result = mysqli_query($conn, $query);
+            $row = mysqli_fetch_array($result);
+
+            $now = time();
+            $day = jdate('d', $now);
+            $month = jdate('m', $now);
+            $year = jdate('Y', $now);
+
+
+            $begin_time = $row['begin_time'];
+            $end_time = $row['end_time'];
+            $f_name = $row['f_name'];
+            $l_name = $row['l_name'];
+            $uni_num = $row['uni_name'];
+            $phone = $row['phone'];
+            $melli = $row['melli'];
+            $grade = $row['grade'];
+            $field = $row['field'];
+            $madrak = $row['madrak'];
+            $gender = $row['gender'];
+            $uni_name = $row['uni_name'];
+            $uni_kind = $row['uni_kind'];
+            $subject = $row['subject'];
+            $email = $row['email'];
+            $year_madrak = $row['year'];
+            $pc_name = $row['ip'];
+
+
+            if ($result) {
+                $name_for_details = $row['f_name'];
+                $last_name_for_details = $row['l_name'];
+                $melli_for_details = $row['melli'];
+
+                $begin_time = $row['begin_time'];
+                $end_time = $row['end_time'];
+                $to_time = strtotime($begin_time);
+                $from_time = strtotime($end_time);
+                $total_time = round(abs($to_time - $from_time) / 60, 2);
+
+                $price = round(($total_time * 450)/10000,1)*10000;
+                ###########################################################################
+                $query3 = "INSERT INTO `all_users`(`ip`, `day`, `month`, `year`, `start_time`, `end_time`, `price`, `f_name`, `l_name`, `melli`, `uni_num`, `phone`, `email`,`madrak`, `year_madrak`,`grade`, `field`, `gender`, `uni_name`, `uni_kind`, `subject`)  VALUES ('$pc_name','$day','$month','$year','$begin_time','$end_time','$price','$f_name','$l_name','$melli','$uni_num','$phone','$email','$madrak','$year_madrak','$grade','$field','$gender','$uni_name','$uni_kind','$subject')";
+                $result3 = mysqli_query($conn, $query3);
+                $id = mysqli_insert_id($conn);
+
+                ###########################################################################
+
+                $query = "UPDATE `ready_users` SET `f_name`='',`l_name`='',`melli`='',`uni_num`='',`phone`='', `email`='',`gender`=0,`grade`=0,`madrak`=0,`year`=0,`field`=0,`uni_kind`=0,`uni_name`='',`subject`='',`begin_time`='', `end_time`='' WHERE `ip` = '$pc_name'";
+
+                $result = mysqli_query($conn, $query);
+
+
+
+
+            }
+            else {
+                $errTyp = "danger";
+                $errMSG = "آی پی این کامپیوتر در پایگاه داده موجود نیست، با کارشناس بخش تماس بگیرید.";
+                $conn = null;
+            }
+        }
+    }
+    else{
+        header('Location: computers.php');
+    }
+}
+
+
+$query5 = "SELECT * FROM `ready_users` WHERE 1";
+$result5 = mysqli_query($conn, $query5);
 
 ?>
 <!DOCTYPE html>
@@ -52,23 +136,25 @@ $result = mysqli_query($conn, $query);
 </div>
 <div style="margin-bottom: 5%" class="container">
 
-    <?php while ($row = mysqli_fetch_array($result)) { ?>
+    <?php while ($row5 = mysqli_fetch_array($result5)) { ?>
         <div style="text-align: center;float: right;font-family: 'Arial';font-weight: bold;font-size: small;margin-bottom: 5%" class="col-md-2">
             <?php
-            if ($row['isReady'] == 1) {
+            if ($row5['isReady'] == 1) {
                 ?>
                 <img style="display: block;margin: auto" width="60%" height="30%" src="img/pcNA.png">
-                <p><?php echo 'PC NO: ' . $row['id']; ?></p>
-                <p><?php echo $row['f_name']. " " . $row['l_name']; ?></p>
-                <p><?php echo $row['begin_time']; ?></p>
-                <!--<p><?php /*echo 'آی پی: ' . $row['ip'];*/?></p>-->
-                <!--<p><?php /*echo 'مشغول'; */?></p>-->
+                <p><?php echo 'PC NO: ' . $row5['id']; ?></p>
+                <p><?php echo $row5['f_name']. " " . $row5['l_name']; ?></p>
+                <p><?php echo $row5['begin_time']; ?></p>
+                <form action="" method="post">
+                    <input hidden name="pc_id" value="<?php echo $row5['id']; ?>">
+                    <button style="font-family: 'Iranian Sans'" class="btn btn-primary" name="end_work" type="submit">پایان کار</button>
+                </form>
+
             <?php } else {
                 ?>
                 <img style="display: block;margin: auto" width="60%" height="30%" src="img/pcA.png">
-                <p><?php echo 'PC NO: ' . $row['id']; ?></p>
-               <!-- <p><?php /*echo 'آی پی: ' . $row['ip'];*/?></p>-->
-                <!--<p><?php /*echo 'آماده برای سرویس دهی'; */?></p>-->
+                <p><?php echo 'PC NO: ' . $row5['id']; ?></p>
+
             <?php } ?>
 
         </div>
@@ -91,24 +177,20 @@ $result = mysqli_query($conn, $query);
                 <div class="modal-body">
                     <div class="row">
                         <?php
-                        $query = "SELECT * FROM `ready_users` WHERE 1";
-                        $result = mysqli_query($conn, $query);
+                        $query4 = "SELECT * FROM `ready_users` WHERE 1";
+                        $result4 = mysqli_query($conn, $query4);
                         ?>
-                        <?php while ($row = mysqli_fetch_array($result)) { ?>
+                        <?php while ($row4 = mysqli_fetch_array($result4)) { ?>
                             <div style="text-align: center;float: right;font-family: 'Arial';font-weight: bold;" class="col-md-1">
                                 <?php
-                                if ($row['isReady'] == 1) {
+                                if ($row4['isReady'] == 1) {
                                     ?>
                                     <img style="display: block;margin: auto" width="60%" height="30%" src="img/pcNA.png">
-                                    <p><?php echo $row['id']; ?></p>
-                                    <!--<p><?php /*echo 'آی پی: ' . $row['ip'];*/?></p>-->
-                                    <!--<p><?php /*echo 'مشغول'; */?></p>-->
+                                    <p><?php echo $row4['id']; ?></p>
                                 <?php } else {
                                     ?>
                                     <img style="display: block;margin: auto" width="60%" height="30%" src="img/pcA.png">
-                                    <p><?php echo $row['id']; ?></p>
-                                    <!-- <p><?php /*echo 'آی پی: ' . $row['ip'];*/?></p>-->
-                                    <!--<p><?php /*echo 'آماده برای سرویس دهی'; */?></p>-->
+                                    <p><?php echo $row4['id']; ?></p>
                                 <?php } ?>
 
                             </div>

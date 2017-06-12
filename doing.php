@@ -30,29 +30,33 @@ if ($user_id == ""){
 date_default_timezone_set("Asia/Tehran");
 
 if (isset($_POST['btn-end'])) {
+    $query_for_user_exist = "SELECT `isReady` FROM `ready_users` WHERE `ip` = '$pc_name'";
+    $result_for_user_exist = mysqli_query($conn, $query_for_user_exist);
+    $array_for_user_exist = mysqli_fetch_array($result_for_user_exist);
+    $is_user_exist = $array_for_user_exist['isReady'];
+    if ($is_user_exist == 1){
+        $end_time = date("h:i:sa");
+        $isReady = 0;
+        $query = "UPDATE `ready_users` SET `end_time`= '$end_time', `isReady`= '$isReady' WHERE `ip` = '$pc_name'";
+        $result = mysqli_query($conn, $query);
 
-    $end_time = date("h:i:sa");
-    $isReady = 0;
-    $query = "UPDATE `ready_users` SET `end_time`= '$end_time', `isReady`= '$isReady' WHERE `ip` = '$pc_name'";
-    $result = mysqli_query($conn, $query);
+        $query2 = "SELECT `ip` FROM `ready_users` WHERE `ip` = '$pc_name'";
+        $result2 = mysqli_query($conn, $query2);
+        $ip_count = mysqli_num_rows($result2);
 
-    $query2 = "SELECT `ip` FROM `ready_users` WHERE `ip` = '$pc_name'";
-    $result2 = mysqli_query($conn, $query2);
-    $ip_count = mysqli_num_rows($result2);
-
-    if ($result && $ip_count == 1) {
-        $conn = null;
-        $_SESSION['start'] = $date;
-        $_SESSION['user_id'] = $melli;
-        $_SESSION['user_name'] = $name;
-        $_SESSION['last_name'] = $last_name;
-        header('Location: recipt.php');
+        if ($result && $ip_count == 1) {
+            $conn = null;
+            header('Location: recipt.php');
 
 
-    } else {
-        $errTyp = "danger";
-        $errMSG = "آی پی این کامپیوتر در پایگاه داده موجود نیست، با کارشناس بخش تماس بگیرید.";
-        $conn = null;
+        } else {
+            $errTyp = "danger";
+            $errMSG = "آی پی این کامپیوتر در پایگاه داده موجود نیست، با کارشناس بخش تماس بگیرید.";
+            $conn = null;
+        }
+    }
+    else{
+        header('Location: index.php');
     }
 
 
