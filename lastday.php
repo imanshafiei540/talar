@@ -44,7 +44,7 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
+    <title>آخرین کاربران روز</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -92,7 +92,7 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>پرداخت</th>
+            <th>وضعیت پرداخت</th>
             <th>ساعت خروج</th>
             <th>ساعت ورود</th>
             <th>شماره کامپیوتر</th>
@@ -101,6 +101,8 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
             <th>کد ملی</th>
             <th>نام خانوادگی</th>
             <th>نام</th>
+            <th>پرداخت</th>
+            <th>حذف</th>
         </tr>
         </thead>
         <tbody>
@@ -124,7 +126,7 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
                 $des_num = mysqli_fetch_assoc($r);
                 ?>
                 <tr>
-                    <td><?php echo ($row['id'] == 1 ? '<i class="fa fa-check-circle" style="color:green"></i>' : '<i class="fa fa-remove" style="color:red"></i>');?></td>
+                    <td style="text-align: center;"><?php echo ($row['pay'] == 1 ? '<i class="glyphicon glyphicon-check" style="color:green"></i>' : '<i class="glyphicon glyphicon-remove" style="color:red"></i>');?></td>
                     <td style="font-family: 'B Yekan';font-size: large"><?php echo $row['end_time']; ?></td>
                     <td style="font-family: 'B Yekan';font-size: large"><?php echo $row['start_time']; ?></td>
                     <td style="font-family: 'B Yekan';font-size: large"><?php echo $des_num['id']; ?></td>
@@ -133,6 +135,8 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
                     <td style="font-family: 'B Yekan';font-size: large"><?php echo $row['melli']; ?></td>
                     <td><?php echo $row['l_name']; ?></td>
                     <td><?php echo $row['f_name']; ?></td>
+                    <td style="text-align: center"><a href="autopay.php?user_id=<?php echo $row['id']; ?>" class="glyphicon glyphicon-shopping-cart"></a></td>
+                    <td style="text-align: center"><a href="autoremove.php?user_id=<?php echo $row['id']; ?>" class="glyphicon glyphicon-remove"></a></td>
                 </tr>
                 <?php
 
