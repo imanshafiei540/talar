@@ -99,7 +99,7 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
             <th>نام خانوادگی</th>
             <th>نام</th>
             <th>پرداخت</th>
-            <th>حذف</th>
+            <?php if (isset($_SESSION['auth']) && $_SESSION['auth'] == '2'){ echo "<th>حذف</th>";} ?>
         </tr>
         </thead>
         <tbody>
@@ -133,7 +133,9 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
                     <td><?php echo $row['l_name']; ?></td>
                     <td><?php echo $row['f_name']; ?></td>
                     <td style="text-align: center"><a href="autopay.php?user_id=<?php echo $row['id']; ?>" class="glyphicon glyphicon-shopping-cart"></a></td>
+                    <?php if (isset($_SESSION['auth']) && $_SESSION['auth'] == '2'){ ?>
                     <td style="text-align: center"><a href="autoremove.php?user_id=<?php echo $row['id']; ?>" class="glyphicon glyphicon-remove"></a></td>
+                        <?php } ?>
                 </tr>
                 <?php
 
@@ -162,7 +164,7 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
         </tbody>
     </table>
     <h3 style="font-family: 'numsfont';direction: rtl;text-align: center">مجموع پرداختی امروز تا کنون: <?php echo $sum_price_day; ?></h3>
-    <h3 style="font-family: 'numsfont';direction: rtl;text-align: center">مجموع افراد امروز تا کنون: <?php echo $count; ?></h3>
+    <h3 style="font-family: 'numsfont';direction: rtl;text-align: center;margin-bottom: 5%">مجموع افراد امروز تا کنون: <?php echo $count; ?></h3>
     <?php
     if ($count == 0){
         echo "<p style='text-align: right'>.مراجعه کننده ای موجود نمی باشد</p>";
