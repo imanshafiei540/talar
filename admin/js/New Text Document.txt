@@ -1,0 +1,14 @@
+$(function(){
+    var textfield = $("input[name=user]");
+    var password = $("input[name=password]");
+    $('button[type="submit"]').click(function(e) {
+        e.preventDefault();
+        //little validation just to check username
+        if (textfield.val() == "" || password.val() == "") {
+            $("#output").removeClass(' alert alert-success');
+            $("#output").addClass("alert alert-danger animated fadeInUp").html("لطفا نام کاربری و رمز عبور را وارد کنید");
+
+        }
+
+    });
+});

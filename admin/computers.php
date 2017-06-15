@@ -14,8 +14,9 @@ if (!$conn) {
 
 date_default_timezone_set("Asia/Tehran");
 
-if (isset($_POST['btn-end'])) {
-    $query_for_user_exist = "SELECT `isReady` FROM `ready_users` WHERE `ip` = '$pc_name'";
+if (isset($_POST['end_work'])) {
+    $pc_id = $_POST['pc_id'];
+    $query_for_user_exist = "SELECT `isReady` FROM `ready_users` WHERE `id` = '$pc_id'";
     $result_for_user_exist = mysqli_query($conn, $query_for_user_exist);
     $array_for_user_exist = mysqli_fetch_array($result_for_user_exist);
     $is_user_exist = $array_for_user_exist['isReady'];

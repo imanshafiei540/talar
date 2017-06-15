@@ -93,7 +93,7 @@ if (isset($_GET['btn-search3'])){
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
 
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css"/>
 
 
     <style>
@@ -130,7 +130,7 @@ if (isset($_GET['btn-search3'])){
             <div class="controls">
                 <div class="input-append">
                     <input name="date" style="height: 34px" id="datepicker1" class="form-control" type="text">
-                    <button id="datepicker1btn" class="btn" type="button"><i class="icon-calendar"></i></button>
+                    <button id="datepicker1btn" class="btn" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
                 </div>
             </div>
         </div>
@@ -168,14 +168,14 @@ if (isset($_GET['btn-search3'])){
             <div class="controls">
                 <div class="input-append">
                     <input name="from_date" style="height: 34px" id="datepicker2" class="form-control" type="text">
-                    <button id="datepicker2btn" class="btn" type="button"><i class="icon-calendar"></i></button>
+                    <button id="datepicker2btn" class="btn" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
                 </div>
             </div>
             <p style="direction: rtl;" class="control-label" for="datepicker3">تا روز</p>
             <div class="controls">
                 <div class="input-append">
                     <input name="to_date" style="height: 34px" id="datepicker3" class="form-control" type="text">
-                    <button id="datepicker3btn" class="btn" type="button"><i class="icon-calendar"></i></button>
+                    <button id="datepicker3btn" class="btn" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
                 </div>
             </div>
         </div>
@@ -240,8 +240,8 @@ if (isset($_GET['btn-search3'])){
 
 <script src="js/jquery-2.1.1.js"></script>
 
-<script src="js/bootstrap-datepicker.min.js"></script>
-<script src="js/bootstrap-datepicker.fa.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/bootstrap-datepicker.fa.js"></script>
 <script>
     $(document).ready(function () {
         $("#datepicker1").datepicker();

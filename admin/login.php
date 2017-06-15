@@ -35,7 +35,7 @@ ob_start();
                             type="submit">ورود
                     </button>
                 <?php } else { ?>
-                    <a href="panel.php">ورود به پنل کاربری
+                    <a href="index.php">ورود به پنل کاربری
 
                     </button></a>
 
@@ -58,7 +58,7 @@ if (isset($_POST['btn-login'])) {
         if ( $pass == 'admin'){
             $_SESSION['logged_in'] = "true";
             $_SESSION['auth'] = "1";
-            header('Location: panel.php');
+            header('Location: index.php');
         }
         else {
             echo '<script type="text/javascript">
@@ -71,7 +71,7 @@ if (isset($_POST['btn-login'])) {
         if ( $pass == 'ramz'){
             $_SESSION['logged_in'] = "true";
             $_SESSION['auth'] = "2";
-            header('Location: panel.php');
+            header('Location: index.php');
         }
         else {
             echo '<script type="text/javascript">

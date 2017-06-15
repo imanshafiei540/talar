@@ -15,35 +15,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'false'){
     header('Location: login.php');
 }
 
-$day = jdate('d',strtotime("0 days"));
-$month = jdate('m', strtotime("0 days"));
-$year = jdate('Y', strtotime("0 days"));
 
-$query = "SELECT `id` FROM `price` WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year'";
-$result = mysqli_query($conn, $query);
-$id = mysqli_fetch_assoc($result)['id'];
-$isThere = mysqli_num_rows($result);
-
-if ($isThere == 0){
-    $query = "SELECT SUM(price) AS `day_price` FROM all_users WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year'";
-    $result = mysqli_query($conn, $query);
-    $price = mysqli_fetch_assoc($result)['day_price'];
-    if ($price == ""){
-        $price = 0;
-    }
-    $query2 = "INSERT INTO `price`(`day`, `month`, `year`, `price`) VALUES ('$day', '$month', '$year', $price)";
-    $result2 = mysqli_query($conn, $query2);
-}
-else{
-    $query = "SELECT SUM(price) AS `day_price` FROM all_users WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year'";
-    $result = mysqli_query($conn, $query);
-    $price = mysqli_fetch_assoc($result)['day_price'];
-    if ($price == ""){
-        $price = 0;
-    }
-    $query2 = "UPDATE `price` SET `price`='$price' WHERE `id` = '$id'";
-    $result2 = mysqli_query($conn, $query2);
-}
 ?>
 <!DOCTYPE html>
 <html>

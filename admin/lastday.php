@@ -143,6 +143,22 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
             }
         }
 
+        $day = jdate('d',strtotime("0 days"));
+        $month = jdate('m', strtotime("0 days"));
+        $year = jdate('Y', strtotime("0 days"));
+        $result_for_is_day_exist = mysqli_query($conn, "SELECT `id` FROM `price` WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year'");
+        $is_day_exist = mysqli_num_rows($result_for_is_day_exist);
+
+
+
+        if ($is_day_exist == 0){
+            $result_for_insert_into_price = mysqli_query($conn, "INSERT INTO `price`(`day`, `month`, `year`, `price`) VALUES ('$day', '$month', '$year', $sum_price_day)");
+        }
+        else{
+            $id_for_day = mysqli_fetch_array($result_for_is_day_exist)['id'];
+            $result_for_update_price_table = mysqli_query($conn, "UPDATE `price` SET `price`= $sum_price_day WHERE `id` = $id_for_day");
+        }
+
         ?>
 
 
