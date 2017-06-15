@@ -23,26 +23,15 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
     if (!$conn) {
         die("Connection failed : " . mysqli_error());
     }
-    $day = jdate($day_for_function);
-    $month = jdate($month_for_function);
-    $year = jdate($year_for_function);
 
-    $query = "SELECT * FROM `all_users` WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year'";
+    $query = "SELECT * FROM `all_users` WHERE `day` = $day_for_function AND `month` = $month_for_function AND `year` = $year_for_function";
     $result = mysqli_query($conn, $query);
 
     return $result;
 }
 
 
-if (isset($_GET['btn-search1'])){
-    $date = $_GET['date'];
-    if (isset($date) && !empty($date)){
-        $dater= explode('/', $date);
-        $day = jdate($dater[0]);
-        $month = jdate($dater[1]);
-        $year = jdate($dater[2]);
-    }
-}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -128,10 +117,16 @@ if (isset($_GET['btn-search1'])){
             <tbody>
 
             <?php
-            $d = $day;
-            $m = $month;
-            $y = $year;
-            $result = getDayData($d, $m, $y);
+            if (isset($_GET['btn-search1'])){
+                $date = $_GET['date'];
+                if (isset($date) && !empty($date)){
+                    $dater= explode('/', $date);
+                    $day = $dater[0];
+                    $month = $dater[1];
+                    $year = $dater[2];
+                }
+            }
+            $result = getDayData($day, $month, $year);
             $count = mysqli_num_rows($result);
             if ($count != 0) {
                 while ($row = mysqli_fetch_array($result)) {
@@ -165,7 +160,7 @@ if (isset($_GET['btn-search1'])){
                 }
             }
 
-            $result_for_is_day_exist = mysqli_query($conn, "SELECT `id` FROM `price` WHERE `day` = '$d' AND `month` = '$m' AND `year` = '$y'");
+            $result_for_is_day_exist = mysqli_query($conn, "SELECT `id` FROM `price` WHERE `day` = $day AND `month` = $month AND `year` = $year");
             $is_day_exist = mysqli_num_rows($result_for_is_day_exist);
 
 

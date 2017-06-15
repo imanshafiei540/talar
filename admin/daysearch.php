@@ -17,9 +17,9 @@ if (!$conn) {
 }
 
 $now = time();
-$d = jdate('d', $now);
-$m = jdate('m', $now);
-$y = jdate('Y', $now);
+$d = jdate('d', $now,'','Asia/Tehran','en');
+$m = jdate('m', $now,'','Asia/Tehran','en');
+$y = jdate('Y', $now,'','Asia/Tehran','en');
 
 
 if (isset($_GET['btn-search'])) {
@@ -218,6 +218,7 @@ if (isset($_GET['btn-search'])) {
             if (isset($result) and mysqli_num_rows($result) != 0){
                 echo '<thead>
         <tr>
+              <th>بیشتر</th>
              <th>پرداخت</th>
             <th>ساعت خروج</th>
             <th>ساعت ورود</th>
@@ -250,7 +251,34 @@ if (isset($_GET['btn-search'])) {
             $des_num = mysqli_fetch_assoc($r);
             ?>
 
+            <!-- Modal -->
+            <div id="user<?php echo $row['id']; ?>" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 style="text-align: center" class="modal-title">اطلاعات کاربر</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p style="text-align: right;direction: rtl"><?php echo $row['f_name']." ". $row['l_name']; ?></p>
+                            <hr>
+                            <p style="text-align: right;direction: rtl">کد ملی:  <?php echo $row['melli']; ?></p>
+                            <p style="text-align: right;direction: rtl">شماره تماس:  <?php echo $row['phone']; ?></p>
+                            <p style="text-align: right;direction: rtl">نام دانشگاه:  <?php echo $row['uni_name']; ?></p>
+                            <p style="text-align: right;direction: rtl">شماره دانشجویی:  <?php echo $row['uni_num']; ?></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <tr>
+                <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#user<?php echo $row['id']; ?>">بیشتر</button></td>
                 <td><?php echo ($row['pay'] == 1 ? '<i class="glyphicon glyphicon-check" style="color:green"></i>' : '<i class="glyphicon glyphicon-remove" style="color:red"></i>');?></td>
                 <td><?php echo $row['end_time']; ?></td>
                 <td><?php echo $row['start_time']; ?></td>

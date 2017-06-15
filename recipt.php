@@ -27,16 +27,16 @@ if ($ip_count == 1) {
     $row = mysqli_fetch_array($result);
 
     $now = time();
-    $day = jdate('d', $now);
-    $month = jdate('m', $now);
-    $year = jdate('Y', $now);
+    $day = jdate('d', $now,'','Asia/Tehran','en');
+    $month = jdate('m', $now,'','Asia/Tehran','en');
+    $year = jdate('Y', $now,'','Asia/Tehran','en');
 
 
     $begin_time = $row['begin_time'];
     $end_time = $row['end_time'];
     $f_name = $row['f_name'];
     $l_name = $row['l_name'];
-    $uni_num = $row['uni_name'];
+    $uni_num = $row['uni_num'];
     $phone = $row['phone'];
     $melli = $row['melli'];
     $grade = $row['grade'];

@@ -36,9 +36,9 @@ if (isset($_POST['end_work'])) {
             $row = mysqli_fetch_array($result);
 
             $now = time();
-            $day = jdate('d', $now);
-            $month = jdate('m', $now);
-            $year = jdate('Y', $now);
+            $day = jdate('d', $now,'','Asia/Tehran','en');
+            $month = jdate('m', $now,'','Asia/Tehran','en');
+            $year = jdate('Y', $now,'','Asia/Tehran','en');
 
 
             $begin_time = $row['begin_time'];

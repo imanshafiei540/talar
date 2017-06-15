@@ -23,11 +23,8 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
     if (!$conn) {
         die("Connection failed : " . mysqli_error());
     }
-    $day = jdate($day_for_function);
-    $month = jdate($month_for_function);
-    $year = jdate($year_for_function);
 
-    $query = "SELECT * FROM `all_users` WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year'";
+    $query = "SELECT * FROM `all_users` WHERE `day` = '$day_for_function' AND `month` = '$month_for_function' AND `year` = '$year_for_function'";
     $result = mysqli_query($conn, $query);
 
     return $result;
@@ -108,9 +105,9 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
         <tbody>
 
         <?php
-        $d = jdate('d', $now);
-        $m = jdate('m', $now);
-        $y = jdate('Y', $now);
+        $d = jdate('d', $now,'','Asia/Tehran','en');
+        $m = jdate('m', $now,'','Asia/Tehran','en');
+        $y = jdate('Y', $now,'','Asia/Tehran','en');
         $result = getDayData($d, $m, $y);
         $count = mysqli_num_rows($result);
         if ($count != 0) {
@@ -143,10 +140,10 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
             }
         }
 
-        $day = jdate('d',strtotime("0 days"));
-        $month = jdate('m', strtotime("0 days"));
-        $year = jdate('Y', strtotime("0 days"));
-        $result_for_is_day_exist = mysqli_query($conn, "SELECT `id` FROM `price` WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year'");
+        $day = jdate('d', $now,'','Asia/Tehran','en');
+        $month = jdate('m', $now,'','Asia/Tehran','en');
+        $year = jdate('Y', $now,'','Asia/Tehran','en');
+        $result_for_is_day_exist = mysqli_query($conn, "SELECT `id` FROM `price` WHERE `day` = $day AND `month` = $month AND `year` = $year");
         $is_day_exist = mysqli_num_rows($result_for_is_day_exist);
 
 
@@ -168,7 +165,7 @@ function getDayData($day_for_function, $month_for_function, $year_for_function)
     <h3 style="font-family: 'numsfont';direction: rtl;text-align: center">مجموع افراد امروز تا کنون: <?php echo $count; ?></h3>
     <?php
     if ($count == 0){
-        echo "<p style='text-align: right'>.مراجعه ککنده ای موجود نمی باشد</p>";
+        echo "<p style='text-align: right'>.مراجعه کننده ای موجود نمی باشد</p>";
     }
     ?>
 </div>

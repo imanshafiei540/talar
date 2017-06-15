@@ -24,20 +24,20 @@ if (isset($_GET['btn-search1'])){
     $date = $_GET['date'];
     if (isset($date) && !empty($date)){
         $dater= explode('/', $date);
-        $day = jdate($dater[0]);
-        $month = jdate($dater[1]);
-        $year = jdate($dater[2]);
-        $query = "SELECT * FROM `price` WHERE `day` = '$day' AND `month` = '$month' AND `year` = '$year'";
+        $day = (int)$dater[0];
+        $month = (int)$dater[1];
+        $year = (int)$dater[2];
+        $query = "SELECT * FROM `price` WHERE `day` = $day AND `month` = $month AND `year` = $year";
         $result = mysqli_query($conn, $query);
         $price = mysqli_fetch_assoc($result)['price'];
     }
 }
 
 if (isset($_GET['btn-search2'])){
-    $month = jdate($_GET['month']);
-    $year = jdate($_GET['year']);
+    $month = (int)$_GET['month'];
+    $year = (int)$_GET['year'];
     if (isset($month) && !empty($month) && isset($year) && !empty($year)){
-        $query2 = "SELECT SUM(price) AS `month_price` FROM price WHERE `month` = '$month' AND `year` = '$year'";
+        $query2 = "SELECT SUM(price) AS `month_price` FROM price WHERE `month` = $month AND `year` = $year";
         $result2 = mysqli_query($conn, $query2);
         $price2 = mysqli_fetch_assoc($result2)['month_price'];
     }
@@ -50,34 +50,20 @@ if (isset($_GET['btn-search3'])){
     if (isset($from_date) && !empty($from_date) && isset($to_date) && !empty($to_date)){
         $dater= explode('/', $from_date);
 
-        $iday = (int)$dater[0];
-        $imonth = (int)$dater[1];
-        $iyear = (int)$dater[2];
-
-        $day = jdate($dater[0]);
-        $month = jdate($dater[1]);
-        $year = jdate($dater[2]);
+        $day = $dater[0];
+        $month = $dater[1];
+        $year = $dater[2];
+        $from_date = $year . '-' . $month . '-' . $day;
 
         //#######################################################
         $dater2 = explode('/', $to_date);
-        $iday2 = (int)$dater2[0];
-        $imonth2 = (int)$dater2[1];
-        $iyear2 = (int)$dater2[2];
-
-        $day2 = jdate($dater2[0]);
-        $month2 = jdate($dater2[1]);
-        $year2 = jdate($dater2[2]);
+        $day2 = $dater2[0];
+        $month2 = $dater2[1];
+        $year2 = $dater2[2];
+        $to_date = $year2 . '-' . $month2 . '-' . $day2;
 
 
-
-
-        $val_day = abs($iday - $iday2);
-        $val_month = abs($imonth - $imonth2)*30;
-        $val_year = abs($iyear - $iyear2)*365;
-
-
-
-        $query = "SELECT SUM(price) AS 'total_price' FROM `price` WHERE (`day` >= '$day' OR `day` <= '$day2') AND (`month` >= '$month' OR `month` <= '$month2') AND (`year` >= '$year' OR `year` <= '$year2')";
+        $query = "SELECT SUM(price) AS 'total_price' FROM `price` WHERE (CONCAT(`year`, '-', `month`, '-', `day`) BETWEEN '$from_date' AND '$to_date')";
         $result = mysqli_query($conn, $query);
         $price3 = mysqli_fetch_assoc($result)['total_price'];
 
